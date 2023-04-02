@@ -1,6 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
-import Home from './routes/home';
-import Room from './routes/room';
+import { Routes, Route } from 'react-router-dom'
+import Home from './routes/home'
+import Room from './routes/room'
 
 const Router = () => {
   return (
@@ -8,7 +8,7 @@ const Router = () => {
       <Route path="/" element={<Home />} />
       <Route path="/room/:id" element={<Room />} />
     </Routes>
-  );
-};
+  )
+}
 
-export default Router;
+export default Router

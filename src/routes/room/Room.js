@@ -1,17 +1,17 @@
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
-import { useGameRoomStateContext } from './Context';
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import { Link } from 'react-router-dom'
+import { useGameRoomStateContext } from './Context'
 
 const Room = () => {
-  const { room } = useGameRoomStateContext();
+  const { room } = useGameRoomStateContext()
 
   if (!room) {
-    return <Link to="/">Go home</Link>;
+    return <Link to="/">Go home</Link>
   }
 
-  console.log({ room });
+  console.log({ room })
 
   return (
     <Container>
@@ -29,7 +29,7 @@ const Room = () => {
       </Box>
       <Link to="/">Go home</Link>
     </Container>
-  );
-};
+  )
+}
 
-export default Room;
+export default Room
