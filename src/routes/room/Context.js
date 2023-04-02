@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { useSocketStateContext } from './SocketContext';
+import { useSocketStateContext } from '../../context/SocketContext';
 
 const GameRoomStateContext = createContext();
 const GameRoomDispatchContext = createContext();
@@ -12,9 +12,10 @@ const GameRoomContextProvider = ({ children }) => {
     if (!room) {
       return;
     }
+    console.log('entered room: ', room);
   }, [room]);
 
-  const value = useMemo(() => ({ players }), [players]);
+  const value = useMemo(() => ({ players, room }), [players, room]);
   const actionValues = useMemo(() => ({ setPlayers }), [setPlayers]);
 
   return (
