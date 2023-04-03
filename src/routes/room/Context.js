@@ -10,9 +10,8 @@ const GameRoomContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (!room) {
-      return
+      return false
     }
-    console.log('entered room: ', room)
   }, [room])
 
   const value = useMemo(() => ({ players, room }), [players, room])

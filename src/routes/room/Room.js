@@ -1,17 +1,20 @@
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { Link } from 'react-router-dom'
 import { useGameRoomStateContext } from './Context'
+import { useSocketDispatchContext } from '../../context/SocketContext'
 
 const Room = () => {
   const { room } = useGameRoomStateContext()
+  const { leaveRoom } = useSocketDispatchContext()
 
   if (!room) {
     return <Link to="/">Go home</Link>
   }
 
-  console.log({ room })
+  const leaveRoomHandler = () => leaveRoom(room.roomId)
 
   return (
     <Container>
@@ -27,7 +30,7 @@ const Room = () => {
           <Typography key={player.id}>{player.id}</Typography>
         ))}
       </Box>
-      <Link to="/">Go home</Link>
+      <Button onClick={() => leaveRoomHandler()}>Go home</Button>
     </Container>
   )
 }

@@ -12,27 +12,57 @@ const SocketContextProvider = ({ children }) => {
   const [rooms, setRooms] = useState([])
   const [room, setRoom] = useState()
   const navigate = useNavigate()
-  // const location = useLocation();
+
+  const leaveRoom = (roomId) => {
+    socket.emit('room:leave', { roomId }, (err, id) => {
+      if (err) {
+        throw new Error(err)
+      } else {
+        setRoom()
+        navigate('/')
+      }
+    })
+  }
+
+  const createRoom = (name) => {
+    socket.emit('room:create', { name }, (err, id) => {
+      if (err) {
+        throw new Error(err)
+      } else {
+        // navigate(`/room/${id}`)
+      }
+    })
+  }
+
+  const findRoom = (roomId) => {
+    socket.emit('room:join', { roomId }, (err, id) => {
+      if (err) {
+        throw new Error(err)
+      } else {
+        // navigate(`/room/${id}`)
+      }
+    })
+  }
 
   useEffect(() => {
     const socket = io('localhost:8080')
     setSocket(socket)
 
-    console.log({ socket })
-
     socket.on('connected', (payload) => {
-      console.log('conntected: ', payload)
       setRooms(payload)
     })
 
     socket.on('room:get', (payload) => {
-      console.log('room:get: ', payload)
       setRoom(payload)
+      navigate(`/room/${payload.roomId}`)
     })
 
-    socket.on('room:created', (payload) => {
-      console.log('room:created: ', payload)
+    socket.on('rooms:update', (payload) => {
       setRooms(payload)
+    })
+
+    socket.on('room:update', (payload) => {
+      setRoom(payload)
     })
   }, [])
 
@@ -50,8 +80,11 @@ const SocketContextProvider = ({ children }) => {
     () => ({
       setRooms,
       setRoom,
+      createRoom,
+      findRoom,
+      leaveRoom,
     }),
-    [setRooms, setRoom]
+    [setRooms, setRoom, createRoom, findRoom, leaveRoom]
   )
 
   return (

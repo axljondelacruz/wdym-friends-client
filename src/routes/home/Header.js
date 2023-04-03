@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import './styles.css'
-import { useSocketStateContext } from '../../context/SocketContext.js'
+import { useSocketDispatchContext } from '../../context/SocketContext.js'
 import TextField from '@mui/material/TextField'
 
 const DEFAULT = 'DEFAULT'
@@ -13,30 +13,13 @@ const FIND_ROOM = 'FIND_ROOM'
 
 const Home = () => {
   const [buttons, setButtons] = useState(DEFAULT)
-  const { socket, navigate } = useSocketStateContext()
+  const { createRoom, findRoom } = useSocketDispatchContext()
 
   const [roomId, setRoomId] = useState('')
   const [roomName, setRoomName] = useState('')
 
-  const createRoomHandler = () => {
-    socket.emit('room:create', { name: roomName }, (err, id) => {
-      if (err) {
-        throw new Error(err)
-      } else {
-        navigate(`/room/${id}`)
-      }
-    })
-  }
-
-  const findRoomHandler = () => {
-    socket.emit('room:join', { roomId }, (err, id) => {
-      if (err) {
-        throw new Error(err)
-      } else {
-        navigate(`/room/${id}`)
-      }
-    })
-  }
+  const createRoomHandler = () => createRoom(roomName)
+  const findRoomHandler = () => findRoom(roomId)
 
   return (
     <Box>
